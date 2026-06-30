@@ -17,8 +17,7 @@
             <a href="#about">About</a>
             <a href="#experience">Experience</a>
             <a href="#certificates">Certificates</a>
-            <a href="contacts">Contacts</a>
-            
+            <a href="#contact">Contacts</a>
         </nav>
     </header>
 
@@ -203,27 +202,55 @@
         <section id="contact" class="contact">
             <h2>Contact Information</h2>
 
-            <p>Location: South Africa</p>
-            <p>Email: <a href="mailto:sifisosibanyoni64@gmail.com">sifisosibanyoni64@gmail.com</a></p>
-            <p>Phone: <a href="tel:+27681965181">+27 68 196 5181</a></p>
+            <div class="contact-container">
+                <div class="contact-form-wrapper">
+                    <h3>Quick Contact / Send Email</h3>
+                    <form id="email-form" action="#" method="POST">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Your Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="enteryourmail@example.com" required>
+                        </div>
 
-            <p>
-                LinkedIn:
-                <a href="https://www.linkedin.com/in/sifiso-sibanyoni-8b195b397" target="_blank" rel="noopener noreferrer">
-                    View My LinkedIn Profile
-                </a>
-            </p>
+                        <div class="form-group">
+                            <label for="message">Send Message</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Type your message here..." required></textarea>
+                        </div>
 
-            <p>
-                GitHub:
-                <a href="https://github.com/SifisoSibanyonga" target="_blank" rel="noopener noreferrer">
-                    View My GitHub Profile
-                </a>
-            </p>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                    <div id="form-status"></div>
+                </div>
 
-            <a href="Sibanyoni Sifiso_Resume_CV.pdf" target="_blank" rel="noopener noreferrer" class="cv-btn">
-                📄 View Resume
-            </a>
+                <div class="contact-details">
+                    <h3>Direct Info</h3>
+                    <p><strong>Location:</strong> South Africa</p>
+                    <p><strong>Email:</strong> <a href="mailto:sifisocybo@gmail.com">sifisocybo@gmail.com</a></p>
+                    <p><strong>Phone:</strong> <a href="tel:+27681965181">+27 68 196 5181</a></p>
+
+                    <p>
+                        <strong>LinkedIn:</strong>
+                        <a href="https://www.linkedin.com/in/sifiso-sibanyoni-8b195b397" target="_blank" rel="noopener noreferrer">
+                            View My LinkedIn Profile
+                        </a>
+                    </p>
+
+                    <p>
+                        <strong>GitHub:</strong>
+                        <a href="https://github.com/SifisoSiyabonga" target="_blank" rel="noopener noreferrer">
+                            View My GitHub Profile
+                        </a>
+                    </p>
+
+                    <a href="Sibanyoni Sifiso_Resume_CV.pdf" target="_blank" rel="noopener noreferrer" class="cv-btn">
+                        📄 View Resume
+                    </a>
+                </div>
+            </div>
         </section>
     </main>
 
