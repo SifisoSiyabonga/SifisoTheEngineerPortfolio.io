@@ -6,6 +6,158 @@
     <title>Sifiso Software & Systems</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Interactive Showcase Button Styles */
+        .project-btn {
+            background: linear-gradient(135deg, #0078ff, #00c6ff);
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 120, 255, 0.3);
+        }
+
+        .project-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 120, 255, 0.5);
+            background: linear-gradient(135deg, #00c6ff, #0078ff);
+        }
+
+        .project-btn i {
+            font-size: 0.9rem;
+            transition: transform 0.3s ease;
+        }
+
+        .project-btn:hover i {
+            transform: translateX(4px);
+        }
+
+        /* Modal (Project Showcase Overlay) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 9999; /* Sit on top of everything */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.85); /* Black backdrop with opacity */
+            backdrop-filter: blur(8px); /* Modern blur effect */
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Modal Box Content */
+        .modal-content {
+            background-color: #1e1e24; /* Dark modern theme */
+            color: #ffffff;
+            margin: auto;
+            padding: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 850px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            animation: slideDown 0.4s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Close Button */
+        .close-btn {
+            color: #aaa;
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #00c6ff;
+            text-decoration: none;
+        }
+
+        /* Showcase Modal Grid */
+        .modal h2 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            color: #00c6ff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-subtitle {
+            color: #ccc;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .modal hr {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(90deg, #00c6ff, transparent);
+            margin-bottom: 25px;
+        }
+
+        .modal-project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        /* Project Cards inside Showcase */
+        .modal-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease, border 0.3s ease;
+        }
+
+        .modal-card:hover {
+            transform: translateY(-5px);
+            border-color: #00c6ff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .modal-card-icon {
+            font-size: 2rem;
+            color: #00c6ff;
+            margin-bottom: 12px;
+        }
+
+        .modal-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .modal-card p {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #b3b3b3;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -165,8 +317,11 @@
         <section class="projects">
             <h2>Projects</h2>
             <div class="project-card">
-                <h3>MY Portfolio Website</h3>
-                <p>Personal portfolio website developed using HTML and CSS to showcase skills, projects, and professional information.</p>
+                <h3>My Portfolio Website</h3>
+                <p>Personal portfolio website developed using HTML, CSS, and JavaScript to showcase skills, projects, and professional information.</p>
+                <button id="open-vault-btn" class="project-btn">
+                    Launch Project Showcase <i class="fa-solid fa-rocket"></i>
+                </button>
             </div>
         </section>
         
@@ -196,6 +351,32 @@
         </section>
     </main>
     
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2><i class="fa-solid fa-folder-open"></i> Project Vault</h2>
+            <p class="modal-subtitle">Explore a collection of my upcoming engineering and development projects.</p>
+            <hr>
+            <div class="modal-project-grid">
+                <div class="modal-card">
+                    <div class="modal-card-icon"><i class="fa-solid fa-microchip"></i></div>
+                    <h3>Embedded & Robotic Systems</h3>
+                    <p>Designed and compiled systems implementing ATmega328P microcontrollers and sensor integration.</p>
+                </div>
+                <div class="modal-card">
+                    <div class="modal-card-icon"><i class="fa-solid fa-database"></i></div>
+                    <h3>Database Management</h3>
+                    <p>Modern relational SQL database architectures optimized for performance and precise system analysis.</p>
+                </div>
+                <div class="modal-card">
+                    <div class="modal-card-icon"><i class="fa-solid fa-network-wired"></i></div>
+                    <h3>Network Solutions</h3>
+                    <p>Custom network topologies built on Cisco Packet Tracer focusing on high-availability configurations.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <p>&copy; 2026 Sifiso Sibanyoni. All Rights Reserved.</p>
     </footer>
@@ -218,6 +399,31 @@
             cursorChar: '|',
             loop: true           
         });
+
+        // Interactive Modal Script (Open/Close functionality)
+        const modal = document.getElementById("project-modal");
+        const btn = document.getElementById("open-vault-btn");
+        const span = document.querySelector(".close-btn");
+
+        // Open Modal
+        btn.onclick = function() {
+            modal.style.display = "flex";
+            document.body.style.overflow = "hidden"; // Prevent background page scroll
+        }
+
+        // Close Modal via (X)
+        span.onclick = function() {
+            modal.style.display = "none";
+            document.body.style.overflow = "auto"; // Re-enable background page scroll
+        }
+
+        // Close Modal by clicking outside of it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+        }
     </script>
 </body>
 </html>
