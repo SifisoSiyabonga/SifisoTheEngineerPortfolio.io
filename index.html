@@ -160,6 +160,22 @@
             line-height: 1.5;
             color: #b3b3b3;
         }
+
+        .btn-login {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 6px 16px;
+            background-color: #0078ff;
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .modal-card:hover .btn-login {
+            background-color: #00c6ff;
+        }
     </style>
 </head>
 <body>
@@ -310,19 +326,19 @@
         </section>
         
         <section id="certificates" class="certificates">
-    <h2>Certificates</h2>
-    <div class="project-card">
-        <h3>
-            <a href="Sifiso FNB Certificate.pdf" target="_blank" rel="noopener noreferrer">
-                FNB App Academy <i class="fa-solid fa-arrow-up-right-from-square"></i>
-            </a>
-        </h3>
-        <p>Completed the FNB App Academy program (2025), gaining skill in software development, problem solving, and application design.</p>
-        <a href="Sifiso FNB Certificate.pdf" target="_blank" rel="noopener noreferrer" class="project-btn">
-            View Certificate <i class="fa-solid fa-file-pdf"></i>
-        </a>
-    </div>
-</section>
+            <h2>Certificates</h2>
+            <div class="project-card">
+                <h3>
+                    <a href="Sifiso FNB Certificate.pdf" target="_blank" rel="noopener noreferrer">
+                        FNB App Academy <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </h3>
+                <p>Completed the FNB App Academy program (2025), gaining skill in software development, problem solving, and application design.</p>
+                <a href="Sifiso FNB Certificate.pdf" target="_blank" rel="noopener noreferrer" class="project-btn">
+                    View Certificate <i class="fa-solid fa-file-pdf"></i>
+                </a>
+            </div>
+        </section>
         
         <section class="projects">
             <h2>Projects</h2>
@@ -365,7 +381,8 @@
         <div class="modal-content">
             <span class="close-btn">&times;</span>
             <h2><i class="fa-solid fa-folder-open"></i> Project Vault</h2>
-            <p class="modal-subtitle">Explore my collection of live web applications.</p>
+            <p class="modal-subtitle">**Explore my collection of web development projects. 💻 Click on any project to view the details and explore what I’ve built.**
+</p>
             <hr>
             <div class="modal-project-grid">
                 <!-- Weather Application Card -->
@@ -380,6 +397,16 @@
                     <div class="modal-card-icon"><i class="fa-solid fa-list-check"></i></div>
                     <h3>To-Do Task Application 📝</h3>
                     <p>Interactive task management system featuring task scheduling, dynamic completion tracking, and persistent local storage.</p>
+                </a>
+
+                <!-- Apartment Rental Management System Card -->
+                <a href="https://sibanyoni-property-management-systems.onrender.com" target="_blank" rel="noopener noreferrer" class="modal-card">
+                    <div class="modal-card-icon"><i class="fa-solid fa-building"></i></div>
+                    <h3>Sibanyoni Rentals 🏢</h3>
+                    <p>Apartment Rental Management System 🏢 Browse, book, and manage apartments effortlessly.</p>
+                    <div class="card-actions">
+                        
+                    </div>
                 </a>
             </div>
         </div>
