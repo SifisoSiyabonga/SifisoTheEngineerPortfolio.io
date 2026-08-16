@@ -1,0 +1,1845 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sibanyoni Rentals - Admin Dashboard</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .sidebar {
+            min-height: 100vh;
+            background-color: #2c3e50;
+            color: #fff;
+        }
+
+        .sidebar a {
+            color: #ecf0f1;
+            text-decoration: none;
+            display: block;
+            padding: 12px 20px;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background-color: #34495e;
+            border-left: 4px solid #3498db;
+        }
+
+        .card-stat {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-responsive {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-section {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .technician-select {
+            min-width: 170px;
+        }
+
+        .assignment-success {
+            border-color: #198754;
+            background-color: #f0fff7;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- SIDEBAR -->
+        <div class="col-md-3 col-lg-2 px-0 sidebar">
+
+            <div class="p-3 fs-5 fw-bold border-bottom border-secondary text-center">
+                Sibanyoni Rentals
+            </div>
+
+            <div class="py-3">
+
+                <a href="#" class="active">
+                    <i class="fas fa-chart-line me-2"></i>
+                    Overview
+                </a>
+
+                <a href="#">
+                    <i class="fas fa-tools me-2"></i>
+                    Tickets & Maintenance
+                </a>
+
+                <a href="#">
+                    <i class="fas fa-users-cog me-2"></i>
+                    Technicians
+                </a>
+
+                <a href="#" id="logoutBtn" class="text-danger mt-4">
+                    <i class="fas fa-sign-out-alt me-2"></i>
+                    Logout
+                </a>
+
+            </div>
+        </div>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+
+            <p class="text-muted mb-1">
+                Apartment Rental Management System 🏢
+                Browse, book, and manage apartments effortlessly.
+            </p>
+
+
+            <!-- HEADER -->
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+
+                <h1 class="h2">
+                    Admin Dashboard 🏢
+                </h1>
+
+                <span class="badge bg-primary fs-6" id="adminName">
+                    Welcome, Admin
+                </span>
+
+            </div>
+
+
+            <!-- ANALYTICS CARDS -->
+            <div class="row g-3 mb-4">
+
+                <!-- TOTAL -->
+                <div class="col-md-3">
+                    <div class="card card-stat bg-primary text-white p-3">
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <div>
+                                <h6 class="mb-0">
+                                    Total Tickets
+                                </h6>
+
+                                <h2
+                                    class="mb-0 fw-bold"
+                                    id="totalTicketsCount"
+                                >
+                                    0
+                                </h2>
+                            </div>
+
+                            <i class="fas fa-ticket-alt fa-2x opacity-50"></i>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- PENDING -->
+                <div class="col-md-3">
+
+                    <div class="card card-stat bg-warning text-dark p-3">
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <div>
+
+                                <h6 class="mb-0">
+                                    Pending
+                                </h6>
+
+                                <h2
+                                    class="mb-0 fw-bold"
+                                    id="pendingTicketsCount"
+                                >
+                                    0
+                                </h2>
+
+                            </div>
+
+                            <i class="fas fa-clock fa-2x opacity-50"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- IN PROGRESS -->
+                <div class="col-md-3">
+
+                    <div class="card card-stat bg-info text-white p-3">
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <div>
+
+                                <h6 class="mb-0">
+                                    In Progress
+                                </h6>
+
+                                <h2
+                                    class="mb-0 fw-bold"
+                                    id="inProgressTicketsCount"
+                                >
+                                    0
+                                </h2>
+
+                            </div>
+
+                            <i class="fas fa-spinner fa-2x opacity-50"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RESOLVED -->
+                <div class="col-md-3">
+
+                    <div class="card card-stat bg-success text-white p-3">
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <div>
+
+                                <h6 class="mb-0">
+                                    Resolved
+                                </h6>
+
+                                <h2
+                                    class="mb-0 fw-bold"
+                                    id="resolvedTicketsCount"
+                                >
+                                    0
+                                </h2>
+
+                            </div>
+
+                            <i class="fas fa-check-circle fa-2x opacity-50"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- TICKETS -->
+            <h4 class="mb-3">
+                Maintenance & Complaint Tickets
+            </h4>
+
+
+            <!-- FILTERS -->
+            <div class="filter-section p-3 mb-3">
+
+                <div class="row g-2">
+
+                    <div class="col-md-4">
+
+                        <input
+                            type="text"
+                            id="searchInput"
+                            class="form-control"
+                            placeholder="Search by ID, title, or description..."
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-3">
+
+                        <select
+                            id="filterStatus"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                All Statuses
+                            </option>
+
+                            <option value="Pending">
+                                Pending
+                            </option>
+
+                            <option value="In Progress">
+                                In Progress
+                            </option>
+
+                            <option value="Resolved">
+                                Resolved
+                            </option>
+
+                            <option value="Cancelled">
+                                Cancelled
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="col-md-3">
+
+                        <select
+                            id="filterPriority"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                All Priorities
+                            </option>
+
+                            <option value="Low">
+                                Low
+                            </option>
+
+                            <option value="Medium">
+                                Medium
+                            </option>
+
+                            <option value="High">
+                                High
+                            </option>
+
+                            <option value="Emergency">
+                                Emergency
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="col-md-2">
+
+                        <button
+                            id="resetFilters"
+                            class="btn btn-outline-secondary w-100"
+                        >
+                            Reset Filters
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- TABLE -->
+            <div class="table-responsive p-3">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>Ticket ID</th>
+
+                            <th>
+                                Title & Description
+                            </th>
+
+                            <th>
+                                Category
+                            </th>
+
+                            <th>
+                                Priority
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Assign Technician
+                            </th>
+
+                            <th>
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="ticketsTableBody">
+
+                        <tr>
+
+                            <td
+                                colspan="7"
+                                class="text-center py-4"
+                            >
+                                Loading tickets...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </main>
+
+    </div>
+</div>
+
+
+<script>
+
+    let techniciansList = [];
+    let allTickets = [];
+
+    const token = localStorage.getItem('token');
+
+
+    /* ==========================================
+       PAGE LOAD
+    ========================================== */
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const userRaw =
+            localStorage.getItem('user') ||
+            localStorage.getItem('currentUser');
+
+        let adminName =
+            localStorage.getItem('userName') ||
+            'Admin';
+
+
+        if (userRaw) {
+
+            try {
+
+                const userObj =
+                    JSON.parse(userRaw);
+
+                adminName =
+                    userObj.name ||
+                    userObj.username ||
+                    userObj.email ||
+                    adminName;
+
+            } catch (e) {
+
+                console.error(
+                    'Could not read user information:',
+                    e
+                );
+
+            }
+
+        }
+
+
+        document.getElementById('adminName').innerText =
+            `Welcome, ${adminName}`;
+
+
+        loadTechnicians().then(() => {
+
+            loadTickets();
+
+        });
+
+
+        document
+            .getElementById('searchInput')
+            .addEventListener(
+                'input',
+                applyFilters
+            );
+
+
+        document
+            .getElementById('filterStatus')
+            .addEventListener(
+                'change',
+                applyFilters
+            );
+
+
+        document
+            .getElementById('filterPriority')
+            .addEventListener(
+                'change',
+                applyFilters
+            );
+
+
+        document
+            .getElementById('resetFilters')
+            .addEventListener(
+                'click',
+                () => {
+
+                    document.getElementById(
+                        'searchInput'
+                    ).value = '';
+
+                    document.getElementById(
+                        'filterStatus'
+                    ).value = '';
+
+                    document.getElementById(
+                        'filterPriority'
+                    ).value = '';
+
+                    applyFilters();
+
+                }
+            );
+
+
+        /* LOGOUT */
+
+        document
+            .getElementById('logoutBtn')
+            .addEventListener(
+                'click',
+                (e) => {
+
+                    e.preventDefault();
+
+                    localStorage.clear();
+
+                    window.location.href =
+                        'login.html';
+
+                }
+            );
+
+    });
+
+
+    /* ==========================================
+       AUTH HEADERS
+    ========================================== */
+
+    function getAuthHeaders() {
+
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+
+        if (token) {
+
+            headers['Authorization'] =
+                `Bearer ${token}`;
+
+        }
+
+        return headers;
+
+    }
+
+
+    /* ==========================================
+       LOAD TECHNICIANS
+    ========================================== */
+
+    async function loadTechnicians() {
+
+        try {
+
+            let res =
+                await fetch(
+                    '/api/technicians',
+                    {
+                        headers:
+                            getAuthHeaders()
+                    }
+                );
+
+
+            if (!res.ok) {
+
+                res =
+                    await fetch(
+                        '/api/users?role=technician',
+                        {
+                            headers:
+                                getAuthHeaders()
+                        }
+                    );
+
+            }
+
+
+            if (!res.ok) {
+
+                res =
+                    await fetch(
+                        '/api/users',
+                        {
+                            headers:
+                                getAuthHeaders()
+                        }
+                    );
+
+
+                if (res.ok) {
+
+                    const allUsers =
+                        await res.json();
+
+                    techniciansList =
+                        allUsers.filter(
+                            user =>
+                                String(
+                                    user.role
+                                ).toLowerCase() ===
+                                'technician'
+                        );
+
+                    return;
+
+                }
+
+            }
+
+
+            if (res.ok) {
+
+                techniciansList =
+                    await res.json();
+
+            }
+
+        } catch (err) {
+
+            console.error(
+                'Error loading technicians:',
+                err
+            );
+
+        }
+
+    }
+
+
+    /* ==========================================
+       LOAD TICKETS
+    ========================================== */
+
+    async function loadTickets() {
+
+        try {
+
+            let res =
+                await fetch(
+                    '/api/tickets',
+                    {
+                        headers:
+                            getAuthHeaders()
+                    }
+                );
+
+
+            if (!res.ok) {
+
+                res =
+                    await fetch(
+                        '/api/maintenance',
+                        {
+                            headers:
+                                getAuthHeaders()
+                        }
+                    );
+
+            }
+
+
+            const tickets =
+                await res.json();
+
+
+            if (!res.ok) {
+
+                throw new Error(
+                    tickets.message ||
+                    'Failed to fetch tickets'
+                );
+
+            }
+
+
+            allTickets =
+                Array.isArray(tickets)
+                    ? tickets
+                    : [];
+
+
+            updateStats(allTickets);
+
+            applyFilters();
+
+        } catch (err) {
+
+            console.error(
+                'Error loading tickets:',
+                err
+            );
+
+
+            document.getElementById(
+                'ticketsTableBody'
+            ).innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="7"
+                        class="text-center text-danger"
+                    >
+                        Error loading data.
+                        Make sure backend is running.
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+
+    }
+
+
+    /* ==========================================
+       FILTERS
+    ========================================== */
+
+    function applyFilters() {
+
+        const query =
+            document
+                .getElementById('searchInput')
+                .value
+                .toLowerCase()
+                .trim();
+
+
+        const selectedStatus =
+            document.getElementById(
+                'filterStatus'
+            ).value;
+
+
+        const selectedPriority =
+            document.getElementById(
+                'filterPriority'
+            ).value;
+
+
+        const filteredTickets =
+            allTickets.filter(
+                ticket => {
+
+                    const matchesQuery =
+
+                        (
+                            ticket._id &&
+                            String(ticket._id)
+                                .toLowerCase()
+                                .includes(query)
+                        )
+
+                        ||
+
+                        (
+                            ticket.title &&
+                            ticket.title
+                                .toLowerCase()
+                                .includes(query)
+                        )
+
+                        ||
+
+                        (
+                            ticket.description &&
+                            ticket.description
+                                .toLowerCase()
+                                .includes(query)
+                        )
+
+                        ||
+
+                        (
+                            ticket.category &&
+                            ticket.category
+                                .toLowerCase()
+                                .includes(query)
+                        );
+
+
+                    const matchesStatus =
+                        selectedStatus === '' ||
+                        ticket.status === selectedStatus;
+
+
+                    const matchesPriority =
+                        selectedPriority === '' ||
+                        ticket.priority === selectedPriority;
+
+
+                    return (
+                        matchesQuery &&
+                        matchesStatus &&
+                        matchesPriority
+                    );
+
+                }
+            );
+
+
+        renderTicketsTable(
+            filteredTickets
+        );
+
+    }
+
+
+    /* ==========================================
+       STATISTICS
+    ========================================== */
+
+    function updateStats(tickets) {
+
+        document.getElementById(
+            'totalTicketsCount'
+        ).innerText =
+            tickets.length;
+
+
+        document.getElementById(
+            'pendingTicketsCount'
+        ).innerText =
+            tickets.filter(
+                t =>
+                    (t.status || 'Pending') ===
+                    'Pending'
+            ).length;
+
+
+        document.getElementById(
+            'inProgressTicketsCount'
+        ).innerText =
+            tickets.filter(
+                t =>
+                    t.status ===
+                    'In Progress'
+            ).length;
+
+
+        document.getElementById(
+            'resolvedTicketsCount'
+        ).innerText =
+            tickets.filter(
+                t =>
+                    t.status === 'Resolved' ||
+                    t.status === 'Completed'
+            ).length;
+
+    }
+
+
+    /* ==========================================
+       CHECK TECHNICIAN ASSIGNMENT
+    ========================================== */
+
+    function isTechAssigned(
+        assignedVal,
+        tech
+    ) {
+
+        if (!assignedVal || !tech) {
+
+            return false;
+
+        }
+
+
+        const techId =
+            String(
+                tech._id ||
+                tech.id ||
+                ''
+            ).toLowerCase();
+
+
+        const techName =
+            String(
+                tech.name ||
+                tech.username ||
+                ''
+            ).toLowerCase();
+
+
+        if (
+            typeof assignedVal ===
+            'object'
+        ) {
+
+            const aId =
+                String(
+                    assignedVal._id ||
+                    assignedVal.id ||
+                    ''
+                ).toLowerCase();
+
+
+            const aName =
+                String(
+                    assignedVal.name ||
+                    assignedVal.username ||
+                    ''
+                ).toLowerCase();
+
+
+            return (
+                (
+                    techId &&
+                    aId === techId
+                )
+                ||
+                (
+                    techName &&
+                    aName === techName
+                )
+            );
+
+        }
+
+
+        const aStr =
+            String(
+                assignedVal
+            ).toLowerCase();
+
+
+        return (
+            (
+                techId &&
+                aStr === techId
+            )
+            ||
+            (
+                techName &&
+                aStr === techName
+            )
+        );
+
+    }
+
+
+    /* ==========================================
+       RENDER TABLE
+    ========================================== */
+
+    function renderTicketsTable(
+        tickets
+    ) {
+
+        const tbody =
+            document.getElementById(
+                'ticketsTableBody'
+            );
+
+
+        if (tickets.length === 0) {
+
+            tbody.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="7"
+                        class="text-center py-4"
+                    >
+                        No tickets match the
+                        selected filters.
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+
+        }
+
+
+        tbody.innerHTML =
+            tickets.map(
+                ticket => {
+
+                    const taskId =
+                        ticket._id ||
+                        ticket.id ||
+                        '';
+
+
+                    const priorityBadge =
+
+                        ticket.priority === 'High' ||
+                        ticket.priority === 'Emergency'
+
+                            ? 'bg-danger'
+
+                            :
+
+                        ticket.priority === 'Medium'
+
+                            ? 'bg-warning text-dark'
+
+                            :
+
+                            'bg-secondary';
+
+
+                    const statusBadge =
+
+                        ticket.status === 'Resolved' ||
+                        ticket.status === 'Completed'
+
+                            ? 'bg-success'
+
+                            :
+
+                        ticket.status === 'In Progress'
+
+                            ? 'bg-info text-dark'
+
+                            :
+
+                            'bg-warning text-dark';
+
+
+                    /* 
+                       Look for technician in ALL possible
+                       fields used by the backend.
+                    */
+
+                    const assignedVal =
+                        ticket.assignedTechnicianId ||
+                        ticket.technicianId ||
+                        ticket.assignedTo ||
+                        ticket.technician ||
+                        '';
+
+
+                    const techOptions =
+                        techniciansList
+                            .map(
+                                tech => {
+
+                                    const techId =
+                                        tech._id ||
+                                        tech.id ||
+                                        '';
+
+
+                                    const selected =
+                                        isTechAssigned(
+                                            assignedVal,
+                                            tech
+                                        )
+                                            ? 'selected'
+                                            : '';
+
+
+                                    const displayName =
+                                        tech.name ||
+                                        tech.username ||
+                                        tech.email ||
+                                        'Technician';
+
+
+                                    return `
+
+                                        <option
+                                            value="${escapeHtml(String(techId))}"
+                                            ${selected}
+                                        >
+
+                                            ${escapeHtml(displayName)}
+
+                                            ${
+                                                tech.specialty
+                                                    ? `(${escapeHtml(tech.specialty)})`
+                                                    : ''
+                                            }
+
+                                        </option>
+
+                                    `;
+
+                                }
+                            )
+                            .join('');
+
+
+                    return `
+
+                        <tr>
+
+                            <!-- TICKET ID -->
+
+                            <td>
+
+                                <small class="text-muted">
+
+                                    ${escapeHtml(
+                                        String(taskId)
+                                            .slice(-6)
+                                    )}
+
+                                </small>
+
+                            </td>
+
+
+                            <!-- TITLE -->
+
+                            <td>
+
+                                <strong>
+
+                                    ${escapeHtml(
+                                        ticket.title ||
+                                        ticket.issue ||
+                                        'Maintenance Ticket'
+                                    )}
+
+                                </strong>
+
+                                <br>
+
+                                <small class="text-muted">
+
+                                    ${escapeHtml(
+                                        ticket.description ||
+                                        ticket.details ||
+                                        ''
+                                    )}
+
+                                </small>
+
+                            </td>
+
+
+                            <!-- CATEGORY -->
+
+                            <td>
+
+                                <span
+                                    class="badge bg-outline-dark text-dark border"
+                                >
+
+                                    ${escapeHtml(
+                                        ticket.category ||
+                                        'General'
+                                    )}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- PRIORITY -->
+
+                            <td>
+
+                                <span
+                                    class="badge ${priorityBadge}"
+                                >
+
+                                    ${escapeHtml(
+                                        ticket.priority ||
+                                        'Medium'
+                                    )}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- STATUS -->
+
+                            <td>
+
+                                <span
+                                    class="badge ${statusBadge}"
+                                >
+
+                                    ${escapeHtml(
+                                        ticket.status ||
+                                        'Pending'
+                                    )}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- TECHNICIAN -->
+
+                            <td>
+
+                                <select
+                                    class="form-select form-select-sm technician-select"
+                                    data-ticket-id="${escapeHtml(String(taskId))}"
+                                    onchange="assignTechnician('${escapeHtml(String(taskId))}', this.value)"
+                                >
+
+                                    <option value="">
+
+                                        -- Assign Tech --
+
+                                    </option>
+
+                                    ${techOptions}
+
+                                </select>
+
+                            </td>
+
+
+                            <!-- STATUS ACTION -->
+
+                            <td>
+
+                                <select
+                                    class="form-select form-select-sm"
+                                    onchange="updateStatus('${escapeHtml(String(taskId))}', this.value)"
+                                >
+
+                                    <option
+                                        value="Pending"
+                                        ${
+                                            (
+                                                ticket.status ||
+                                                'Pending'
+                                            ) === 'Pending'
+                                                ? 'selected'
+                                                : ''
+                                        }
+                                    >
+                                        Pending
+                                    </option>
+
+
+                                    <option
+                                        value="In Progress"
+                                        ${
+                                            ticket.status ===
+                                            'In Progress'
+                                                ? 'selected'
+                                                : ''
+                                        }
+                                    >
+                                        In Progress
+                                    </option>
+
+
+                                    <option
+                                        value="Resolved"
+                                        ${
+                                            ticket.status ===
+                                                'Resolved' ||
+                                            ticket.status ===
+                                                'Completed'
+                                                ? 'selected'
+                                                : ''
+                                        }
+                                    >
+                                        Resolved
+                                    </option>
+
+
+                                    <option
+                                        value="Cancelled"
+                                        ${
+                                            ticket.status ===
+                                            'Cancelled'
+                                                ? 'selected'
+                                                : ''
+                                        }
+                                    >
+                                        Cancelled
+                                    </option>
+
+                                </select>
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                }
+            ).join('');
+
+    }
+
+
+    /* ==========================================
+       ASSIGN TECHNICIAN
+    ========================================== */
+
+    async function assignTechnician(
+        ticketId,
+        technicianId
+    ) {
+
+        console.log(
+            'Assigning technician:',
+            technicianId,
+            'to ticket:',
+            ticketId
+        );
+
+
+        /* Find ticket */
+
+        const ticketObj =
+            allTickets.find(
+                ticket =>
+                    String(
+                        ticket._id ||
+                        ticket.id
+                    ) ===
+                    String(ticketId)
+            );
+
+
+        if (!ticketObj) {
+
+            alert(
+                'Ticket not found.'
+            );
+
+            return;
+
+        }
+
+
+        /* Find technician */
+
+        const selectedTech =
+            techniciansList.find(
+                tech =>
+                    String(
+                        tech._id ||
+                        tech.id
+                    ) ===
+                    String(technicianId)
+            );
+
+
+        const techName =
+            selectedTech
+                ? (
+                    selectedTech.name ||
+                    selectedTech.username ||
+                    selectedTech.email ||
+                    ''
+                )
+                : '';
+
+
+        /* ======================================
+           UPDATE LOCAL DATA IMMEDIATELY
+        ====================================== */
+
+        if (technicianId) {
+
+            ticketObj.assignedTo =
+                technicianId;
+
+            ticketObj.technicianId =
+                technicianId;
+
+            ticketObj.assignedTechnicianId =
+                technicianId;
+
+            ticketObj.technician =
+                technicianId;
+
+            ticketObj.technicianName =
+                techName;
+
+            ticketObj.status =
+                'In Progress';
+
+        } else {
+
+            ticketObj.assignedTo =
+                '';
+
+            ticketObj.technicianId =
+                '';
+
+            ticketObj.assignedTechnicianId =
+                '';
+
+            ticketObj.technician =
+                '';
+
+            ticketObj.technicianName =
+                '';
+
+            ticketObj.status =
+                'Pending';
+
+        }
+
+
+        /* ======================================
+           KEEP THE SELECTED TECHNICIAN
+        ====================================== */
+
+        const currentSelect =
+            document.querySelector(
+                `.technician-select[data-ticket-id="${CSS.escape(String(ticketId))}"]`
+            );
+
+
+        if (currentSelect) {
+
+            currentSelect.value =
+                technicianId || '';
+
+            currentSelect.classList.add(
+                'assignment-success'
+            );
+
+        }
+
+
+        /* ======================================
+           PAYLOAD
+        ====================================== */
+
+        const payload = {
+
+            technician:
+                technicianId || null,
+
+            technicianId:
+                technicianId || null,
+
+            assignedTechnicianId:
+                technicianId || null,
+
+            assignedTo:
+                technicianId || null,
+
+            technicianName:
+                techName,
+
+            status:
+                technicianId
+                    ? 'In Progress'
+                    : 'Pending'
+
+        };
+
+
+        try {
+
+            /* ==================================
+               FIRST API
+            ================================== */
+
+            let res =
+                await fetch(
+                    `/api/tickets/${ticketId}`,
+                    {
+                        method: 'PUT',
+                        headers:
+                            getAuthHeaders(),
+                        body:
+                            JSON.stringify(
+                                payload
+                            )
+                    }
+                );
+
+
+            /* ==================================
+               SECOND API
+            ================================== */
+
+            if (res.status === 404) {
+
+                res =
+                    await fetch(
+                        `/api/maintenance/${ticketId}`,
+                        {
+                            method: 'PUT',
+                            headers:
+                                getAuthHeaders(),
+                            body:
+                                JSON.stringify(
+                                    payload
+                                )
+                        }
+                    );
+
+            }
+
+
+            /* ==================================
+               THIRD API
+            ================================== */
+
+            if (res.status === 404) {
+
+                res =
+                    await fetch(
+                        `/api/maintenance/assign/${ticketId}`,
+                        {
+                            method: 'PUT',
+                            headers:
+                                getAuthHeaders(),
+                            body:
+                                JSON.stringify({
+                                    technicianId:
+                                        technicianId ||
+                                        null
+                                })
+                        }
+                    );
+
+            }
+
+
+            const data =
+                await res
+                    .json()
+                    .catch(
+                        () => ({})
+                    );
+
+
+            /* ==================================
+               ERROR
+            ================================== */
+
+            if (!res.ok) {
+
+                console.error(
+                    'Backend assignment error:',
+                    data
+                );
+
+
+                alert(
+                    `Failed to assign technician.\n\n` +
+                    (
+                        data.message ||
+                        data.error ||
+                        `Server error ${res.status}`
+                    )
+                );
+
+
+                /*
+                   Only reload when backend
+                   rejects the assignment.
+                */
+
+                await loadTickets();
+
+                return;
+
+            }
+
+
+            /* ==================================
+               SUCCESS
+            ================================== */
+
+            console.log(
+                'Technician assigned successfully:',
+                techName
+            );
+
+
+            /* Update statistics */
+
+            updateStats(
+                allTickets
+            );
+
+
+            /*
+               IMPORTANT:
+               DO NOT call loadTickets()
+               here.
+
+               This prevents the dropdown
+               from returning to
+               "-- Assign Tech --".
+            */
+
+
+            /* Make sure dropdown remains selected */
+
+            if (currentSelect) {
+
+                currentSelect.value =
+                    technicianId || '';
+
+                currentSelect.classList.add(
+                    'assignment-success'
+                );
+
+            }
+
+
+            /* Remove success highlight after 2 seconds */
+
+            setTimeout(
+                () => {
+
+                    if (currentSelect) {
+
+                        currentSelect.classList.remove(
+                            'assignment-success'
+                        );
+
+                    }
+
+                },
+                2000
+            );
+
+
+        } catch (err) {
+
+            console.error(
+                'Error assigning technician:',
+                err
+            );
+
+
+            alert(
+                'Network error while assigning technician. ' +
+                'Please check that your backend server is running.'
+            );
+
+        }
+
+    }
+
+
+    /* ==========================================
+       UPDATE STATUS
+    ========================================== */
+
+    async function updateStatus(
+        ticketId,
+        status
+    ) {
+
+        try {
+
+            let res =
+                await fetch(
+                    `/api/tickets/${ticketId}`,
+                    {
+                        method: 'PUT',
+                        headers:
+                            getAuthHeaders(),
+                        body:
+                            JSON.stringify({
+                                status
+                            })
+                    }
+                );
+
+
+            if (res.status === 404) {
+
+                res =
+                    await fetch(
+                        `/api/maintenance/${ticketId}`,
+                        {
+                            method: 'PUT',
+                            headers:
+                                getAuthHeaders(),
+                            body:
+                                JSON.stringify({
+                                    status
+                                })
+                        }
+                    );
+
+            }
+
+
+            if (res.status === 404) {
+
+                res =
+                    await fetch(
+                        `/api/maintenance/update-status/${ticketId}`,
+                        {
+                            method: 'PUT',
+                            headers:
+                                getAuthHeaders(),
+                            body:
+                                JSON.stringify({
+                                    status
+                                })
+                        }
+                    );
+
+            }
+
+
+            const data =
+                await res
+                    .json()
+                    .catch(
+                        () => ({})
+                    );
+
+
+            if (res.ok) {
+
+                /*
+                   Update local ticket first
+                   so the UI stays consistent.
+                */
+
+                const ticket =
+                    allTickets.find(
+                        t =>
+                            String(
+                                t._id ||
+                                t.id
+                            ) ===
+                            String(ticketId)
+                    );
+
+
+                if (ticket) {
+
+                    ticket.status =
+                        status;
+
+                }
+
+
+                updateStats(
+                    allTickets
+                );
+
+
+                applyFilters();
+
+
+            } else {
+
+                alert(
+                    'Failed to update status: ' +
+                    (
+                        data.message ||
+                        data.error ||
+                        'Server rejected request.'
+                    )
+                );
+
+            }
+
+
+        } catch (err) {
+
+            console.error(
+                'Error updating status:',
+                err
+            );
+
+
+            alert(
+                'Network error while updating status.'
+            );
+
+        }
+
+    }
+
+
+    /* ==========================================
+       ESCAPE HTML
+    ========================================== */
+
+    function escapeHtml(text) {
+
+        return String(
+            text || ''
+        ).replace(
+            /[&<>"']/g,
+            function (m) {
+
+                return {
+
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#039;'
+
+                }[m];
+
+            }
+        );
+
+    }
+
+</script>
+
+</body>
+</html>
+```

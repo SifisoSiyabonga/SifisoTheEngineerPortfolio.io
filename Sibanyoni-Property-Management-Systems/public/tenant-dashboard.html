@@ -1,0 +1,1827 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Tenant Dashboard - Sibanyoni Rentals
+    </title>
+
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+
+            font-family:
+                'Segoe UI',
+                Tahoma,
+                Geneva,
+                Verdana,
+                sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: #ffffff;
+
+            padding: 20px 28px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, 0.05);
+
+            margin-bottom: 24px;
+        }
+
+        .header h1 {
+            font-size: 1.6rem;
+            color: #1a1a1a;
+
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .header p {
+            color: #6c757d;
+            font-size: 0.88rem;
+            margin-top: 4px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-pill {
+            background: #eef2ff;
+            color: #4f46e5;
+
+            padding: 8px 16px;
+
+            border-radius: 20px;
+
+            font-weight: 600;
+            font-size: 0.9rem;
+
+            display: flex;
+            align-items: center;
+
+            gap: 8px;
+        }
+
+        .btn-logout {
+            background: #ef4444;
+            color: white;
+
+            border: none;
+
+            padding: 9px 18px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .btn-logout:hover {
+            background: #dc2626;
+        }
+
+        /* =========================================
+           STATISTICS
+        ========================================= */
+
+        .stats-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(220px, 1fr)
+                );
+
+            gap: 20px;
+
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, 0.05);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            border-left: 5px solid #2563eb;
+        }
+
+        .stat-card.pending {
+            border-left-color: #f59e0b;
+        }
+
+        .stat-card.progress {
+            border-left-color: #3b82f6;
+        }
+
+        .stat-card.resolved {
+            border-left-color: #10b981;
+        }
+
+        .stat-info h3 {
+            font-size: 0.85rem;
+            color: #6b7280;
+
+            text-transform: uppercase;
+        }
+
+        .stat-info p {
+            font-size: 1.8rem;
+
+            font-weight: 700;
+
+            color: #111827;
+
+            margin-top: 4px;
+        }
+
+        .stat-icon {
+            font-size: 1.8rem;
+            opacity: 0.8;
+        }
+
+        /* =========================================
+           CARDS
+        ========================================= */
+
+        .card {
+            background: white;
+
+            padding: 24px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, 0.05);
+
+            margin-bottom: 24px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 18px;
+
+            padding-bottom: 12px;
+
+            border-bottom:
+                1px solid #f3f4f6;
+        }
+
+        .card-header h2 {
+            font-size: 1.25rem;
+            color: #1f2937;
+        }
+
+        .card-header i {
+            color: #0056b3;
+            font-size: 1.2rem;
+        }
+
+        /* =========================================
+           FORM
+        ========================================= */
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 3;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 6px;
+
+            font-weight: 600;
+
+            font-size: 0.88rem;
+
+            color: #374151;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+
+            padding: 10px 14px;
+
+            border:
+                1.5px solid #d1d5db;
+
+            border-radius: 8px;
+
+            font-size: 0.95rem;
+
+            outline: none;
+
+            background-color: #fafafa;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #2563eb;
+
+            background-color: white;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37, 99, 235, 0.15);
+        }
+
+        textarea {
+            resize: vertical;
+            height: 90px;
+        }
+
+        .btn-submit {
+            background-color: #2563eb;
+
+            color: white;
+
+            border: none;
+
+            padding: 12px 24px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-size: 0.95rem;
+
+            font-weight: 600;
+        }
+
+        .btn-submit:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* =========================================
+           TABLE
+        ========================================= */
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            text-align: left;
+
+            min-width: 1000px;
+        }
+
+        th,
+        td {
+            padding: 14px 16px;
+
+            border-bottom:
+                1px solid #e5e7eb;
+
+            font-size: 0.9rem;
+
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f9fafb;
+
+            color: #4b5563;
+
+            font-weight: 600;
+
+            text-transform: uppercase;
+
+            font-size: 0.78rem;
+        }
+
+        tbody tr:hover {
+            background-color: #f9fafb;
+        }
+
+        /* =========================================
+           STATUS
+        ========================================= */
+
+        .status-badge {
+            padding: 5px 12px;
+
+            border-radius: 20px;
+
+            font-size: 0.78rem;
+
+            font-weight: 700;
+
+            display: inline-block;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .status-inprogress {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-resolved {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-cancelled {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* =========================================
+           PRIORITY
+        ========================================= */
+
+        .priority-badge {
+            padding: 4px 10px;
+
+            border-radius: 6px;
+
+            font-size: 0.8rem;
+
+            font-weight: 600;
+
+            display: inline-block;
+        }
+
+        .priority-low {
+            background-color: #e5e7eb;
+            color: #374151;
+        }
+
+        .priority-medium {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .priority-high {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .priority-emergency {
+            background-color: #7f1d1d;
+            color: white;
+        }
+
+        /* =========================================
+           ROOM NUMBER
+        ========================================= */
+
+        .room-number {
+            font-weight: 700;
+
+            color: #2563eb;
+
+            background: #eff6ff;
+
+            padding: 5px 10px;
+
+            border-radius: 6px;
+
+            display: inline-block;
+        }
+
+        /* =========================================
+           TECHNICIAN UPDATE
+        ========================================= */
+
+        .technician-update {
+            background: #eff6ff;
+
+            border-left:
+                4px solid #2563eb;
+
+            padding: 10px 12px;
+
+            border-radius: 6px;
+
+            min-width: 220px;
+
+            max-width: 320px;
+        }
+
+        .technician-update-title {
+            color: #1d4ed8;
+
+            font-weight: 700;
+
+            font-size: 0.78rem;
+
+            margin-bottom: 5px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+        }
+
+        .technician-update-text {
+            color: #374151;
+
+            font-size: 0.85rem;
+
+            line-height: 1.4;
+
+            word-break: break-word;
+        }
+
+        .no-update {
+            color: #9ca3af;
+
+            font-size: 0.85rem;
+
+            font-style: italic;
+        }
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 768px) {
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+
+            .header {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 14px;
+            }
+
+            .header-actions {
+                width: 100%;
+
+                justify-content:
+                    space-between;
+            }
+
+            body {
+                padding: 12px;
+            }
+
+            .card {
+                padding: 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- ==========================================
+         HEADER
+    =========================================== -->
+
+    <div class="header">
+
+        <div>
+
+            <h1>
+
+                <i
+                    class="fa-solid fa-building-user"
+                    style="color:#2563eb;"
+                ></i>
+
+                Tenant Dashboard
+
+            </h1>
+
+            <p>
+
+                Apartment Rental Management System 🏢
+                Browse, book, and manage apartments effortlessly.
+
+            </p>
+
+        </div>
+
+
+        <div class="header-actions">
+
+            <div class="user-pill">
+
+                <i
+                    class="fa-solid fa-user-circle"
+                ></i>
+
+                <span id="user-greeting">
+                    Loading...
+                </span>
+
+            </div>
+
+
+            <button
+                class="btn-logout"
+                onclick="logout()"
+            >
+
+                <i
+                    class="fa-solid fa-right-from-bracket"
+                ></i>
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         SUMMARY STATS
+    =========================================== -->
+
+    <div class="stats-grid">
+
+
+        <div class="stat-card">
+
+            <div class="stat-info">
+
+                <h3>
+                    Total Requests
+                </h3>
+
+                <p id="stat-total">
+                    0
+                </p>
+
+            </div>
+
+            <i
+                class="fa-solid fa-receipt stat-icon"
+            ></i>
+
+        </div>
+
+
+        <div class="stat-card pending">
+
+            <div class="stat-info">
+
+                <h3>
+                    Pending
+                </h3>
+
+                <p id="stat-pending">
+                    0
+                </p>
+
+            </div>
+
+            <i
+                class="fa-solid fa-clock stat-icon"
+            ></i>
+
+        </div>
+
+
+        <div class="stat-card progress">
+
+            <div class="stat-info">
+
+                <h3>
+                    In Progress
+                </h3>
+
+                <p id="stat-progress">
+                    0
+                </p>
+
+            </div>
+
+            <i
+                class="fa-solid fa-wrench stat-icon"
+            ></i>
+
+        </div>
+
+
+        <div class="stat-card resolved">
+
+            <div class="stat-info">
+
+                <h3>
+                    Resolved
+                </h3>
+
+                <p id="stat-resolved">
+                    0
+                </p>
+
+            </div>
+
+            <i
+                class="fa-solid fa-circle-check stat-icon"
+            ></i>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ==========================================
+         SUBMIT MAINTENANCE REQUEST
+    =========================================== -->
+
+    <div class="card">
+
+
+        <div class="card-header">
+
+            <i
+                class="fa-solid fa-plus-circle"
+            ></i>
+
+            <h2>
+                Submit Maintenance Request
+            </h2>
+
+        </div>
+
+
+        <form id="ticket-form">
+
+
+            <div class="form-grid">
+
+
+                <!-- ROOM NUMBER -->
+
+                <div class="form-group">
+
+                    <label for="roomNo">
+
+                        <i
+                            class="fa-solid fa-door-open"
+                        ></i>
+
+                        Room No
+
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="roomNo"
+                        placeholder="e.g. A101"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- ISSUE TITLE -->
+
+                <div class="form-group">
+
+                    <label for="title">
+                        Issue Title
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="title"
+                        placeholder="e.g. Leaking kitchen sink"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CATEGORY -->
+
+                <div class="form-group">
+
+                    <label for="category">
+                        Category
+                    </label>
+
+
+                    <select
+                        id="category"
+                        required
+                    >
+
+                        <option value="">
+                            Select Category
+                        </option>
+
+                        <option value="Plumbing">
+                            Plumbing
+                        </option>
+
+                        <option value="Electrical">
+                            Electrical
+                        </option>
+
+                      <!--<option value="Carpentry">
+                            Carpentry
+                        </option>-->   
+
+                        <option value="Appliance">
+                            Appliance
+                        </option>
+
+                        <option value="Structural">
+                            Structural
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- PRIORITY -->
+
+                <div class="form-group">
+
+                    <label for="priority">
+                        Priority
+                    </label>
+
+
+                    <select
+                        id="priority"
+                        required
+                    >
+
+                        <option value="Low">
+                            Low
+                        </option>
+
+                        <option
+                            value="Medium"
+                            selected
+                        >
+                            Medium
+                        </option>
+
+                        <option value="High">
+                            High
+                        </option>
+
+                        <option value="Emergency">
+                            Emergency
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div
+                    class="form-group full-width"
+                >
+
+                    <label for="description">
+
+                        Describe the issue
+
+                    </label>
+
+
+                    <textarea
+                        id="description"
+                        placeholder="Describe the issue in detail..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn-submit"
+            >
+
+                <i
+                    class="fa-solid fa-paper-plane"
+                ></i>
+
+                Submit Request
+
+            </button>
+
+
+        </form>
+
+
+    </div>
+
+
+    <!-- ==========================================
+         TICKET HISTORY
+    =========================================== -->
+
+    <div class="card">
+
+
+        <div class="card-header">
+
+            <i
+                class="fa-solid fa-list-check"
+            ></i>
+
+            <h2>
+                My Maintenance Tickets
+            </h2>
+
+        </div>
+
+
+        <div class="table-responsive">
+
+
+            <table>
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Room No
+                        </th>
+
+                        <th>
+                            Title & Description
+                        </th>
+
+                        <th>
+                            Category
+                        </th>
+
+                        <th>
+                            Priority
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Technician Update
+                        </th>
+
+                        <th>
+                            Date Submitted
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="tickets-list">
+
+
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            style="
+                                text-align:center;
+                                color:#6b7280;
+                                padding:24px;
+                            "
+                        >
+
+                            Loading tickets...
+
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+    // ==========================================
+    // AUTHENTICATION
+    // ==========================================
+
+    const userRaw =
+        localStorage.getItem('user') ||
+        localStorage.getItem('currentUser');
+
+
+    if (!userRaw) {
+
+        window.location.replace(
+            'login.html'
+        );
+
+    }
+
+
+    let user;
+
+    try {
+
+        user =
+            JSON.parse(userRaw);
+
+    } catch (error) {
+
+        console.error(
+            'Invalid user data:',
+            error
+        );
+
+        localStorage.removeItem('user');
+        localStorage.removeItem('currentUser');
+
+        window.location.replace(
+            'login.html'
+        );
+
+    }
+
+
+    const userRole =
+        (user.role || '').toLowerCase();
+
+
+    if (
+        userRole !== 'tenant' &&
+        userRole !== 'admin'
+    ) {
+
+        window.location.replace(
+            'login.html'
+        );
+
+    }
+
+
+    // ==========================================
+    // USER GREETING
+    // ==========================================
+
+    document
+        .getElementById('user-greeting')
+        .textContent =
+            user.name ||
+            user.email;
+
+
+    // ==========================================
+    // LOGOUT
+    // ==========================================
+
+    function logout() {
+
+        localStorage.removeItem('user');
+
+        localStorage.removeItem(
+            'currentUser'
+        );
+
+        window.location.replace(
+            'login.html'
+        );
+
+    }
+
+
+    // ==========================================
+    // ESCAPE HTML
+    // Prevent HTML injection inside tickets
+    // ==========================================
+
+    function escapeHTML(value) {
+
+        if (
+            value === null ||
+            value === undefined
+        ) {
+
+            return '';
+
+        }
+
+        return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+
+    }
+
+
+    // ==========================================
+    // LOAD TENANT TICKETS
+    // ==========================================
+
+    async function loadTickets() {
+
+        try {
+
+            const response =
+                await fetch('/api/tickets');
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    'Failed to load tickets'
+                );
+
+            }
+
+
+            const tickets =
+                await response.json();
+
+
+            const activeUserId =
+                user._id ||
+                user.id;
+
+
+            // ======================================
+            // FILTER CURRENT TENANT'S TICKETS
+            // ======================================
+
+            const userTickets =
+                tickets.filter(ticket => {
+
+                    const ticketUserId =
+                        ticket.userId?._id ||
+                        ticket.userId;
+
+
+                    const ticketTenantId =
+                        ticket.tenantId;
+
+
+                    return (
+
+                        String(ticketUserId) ===
+                        String(activeUserId)
+
+                        ||
+
+                        String(ticketTenantId) ===
+                        String(activeUserId)
+
+                        ||
+
+                        (
+                            ticket.tenantEmail &&
+                            ticket.tenantEmail.toLowerCase() ===
+                            user.email.toLowerCase()
+                        )
+
+                        ||
+
+                        (
+                            ticket.createdBy &&
+                            ticket.createdBy.toLowerCase() ===
+                            user.email.toLowerCase()
+                        )
+
+                    );
+
+                });
+
+
+            // ======================================
+            // STATISTICS
+            // ======================================
+
+            document
+                .getElementById('stat-total')
+                .textContent =
+                    userTickets.length;
+
+
+            document
+                .getElementById('stat-pending')
+                .textContent =
+                    userTickets.filter(
+                        ticket =>
+                            (
+                                ticket.status ||
+                                'Pending'
+                            ).toLowerCase() ===
+                            'pending'
+                    ).length;
+
+
+            document
+                .getElementById('stat-progress')
+                .textContent =
+                    userTickets.filter(
+                        ticket =>
+                            (
+                                ticket.status ||
+                                ''
+                            ).toLowerCase() ===
+                            'in progress'
+                    ).length;
+
+
+            document
+                .getElementById('stat-resolved')
+                .textContent =
+                    userTickets.filter(
+                        ticket =>
+                            (
+                                ticket.status ||
+                                ''
+                            ).toLowerCase() ===
+                            'resolved'
+                    ).length;
+
+
+            const tbody =
+                document.getElementById(
+                    'tickets-list'
+                );
+
+
+            // ======================================
+            // NO TICKETS
+            // ======================================
+
+            if (
+                userTickets.length === 0
+            ) {
+
+                tbody.innerHTML = `
+
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            style="
+                                text-align:center;
+                                color:#6b7280;
+                                padding:24px;
+                            "
+                        >
+
+                            <i
+                                class="fa-solid fa-inbox"
+                                style="
+                                    font-size:25px;
+                                    margin-bottom:8px;
+                                "
+                            ></i>
+
+                            <br>
+
+                            No maintenance requests found.
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+                return;
+
+            }
+
+
+            // ======================================
+            // DISPLAY TICKETS
+            // ======================================
+
+            tbody.innerHTML =
+                userTickets.map(ticket => {
+
+
+                    const status =
+                        ticket.status ||
+                        'Pending';
+
+
+                    const statusClass =
+                        status
+                            .toLowerCase()
+                            .replace(
+                                /\s+/g,
+                                ''
+                            );
+
+
+                    const priority =
+                        ticket.priority ||
+                        'Medium';
+
+
+                    const priorityClass =
+                        priority
+                            .toLowerCase();
+
+
+                    const formattedDate =
+                        ticket.createdAt
+                            ? new Date(
+                                ticket.createdAt
+                            ).toLocaleDateString(
+                                undefined,
+                                {
+                                    year:
+                                        'numeric',
+
+                                    month:
+                                        'short',
+
+                                    day:
+                                        'numeric'
+                                }
+                            )
+                            : 'N/A';
+
+
+                    // ==================================
+                    // TECHNICIAN MESSAGE
+                    // ==================================
+
+                    const technicianMessage =
+                        ticket.technicianMessage ||
+                        ticket.technicianNote ||
+                        ticket.message ||
+                        '';
+
+
+                    let updateHTML;
+
+
+                    if (
+                        technicianMessage.trim()
+                    ) {
+
+                        updateHTML = `
+
+                            <div
+                                class="technician-update"
+                            >
+
+                                <div
+                                    class="technician-update-title"
+                                >
+
+                                    <i
+                                        class="fa-solid fa-user-gear"
+                                    ></i>
+
+                                    Technician Update
+
+                                </div>
+
+
+                                <div
+                                    class="technician-update-text"
+                                >
+
+                                    ${escapeHTML(
+                                        technicianMessage
+                                    )}
+
+                                </div>
+
+                            </div>
+
+                        `;
+
+                    } else {
+
+                        updateHTML = `
+
+                            <span
+                                class="no-update"
+                            >
+
+                                No update yet
+
+                            </span>
+
+                        `;
+
+                    }
+
+
+                    return `
+
+                        <tr>
+
+                            <!-- ROOM -->
+
+                            <td>
+
+                                <span
+                                    class="room-number"
+                                >
+
+                                    <i
+                                        class="fa-solid fa-door-open"
+                                    ></i>
+
+                                    ${escapeHTML(
+                                        ticket.roomNo ||
+                                        'N/A'
+                                    )}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- TITLE -->
+
+                            <td>
+
+                                <strong>
+
+                                    ${escapeHTML(
+                                        ticket.title
+                                    )}
+
+                                </strong>
+
+
+                                <div
+                                    style="
+                                        color:#6b7280;
+                                        font-size:0.83rem;
+                                        margin-top:4px;
+                                    "
+                                >
+
+                                    ${escapeHTML(
+                                        ticket.description ||
+                                        ''
+                                    )}
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- CATEGORY -->
+
+                            <td>
+
+                                <span
+                                    style="
+                                        background:#f3f4f6;
+                                        padding:4px 10px;
+                                        border-radius:6px;
+                                        font-weight:500;
+                                    "
+                                >
+
+                                    ${escapeHTML(
+                                        ticket.category ||
+                                        'General'
+                                    )}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- PRIORITY -->
+
+                            <td>
+
+                                <span
+                                    class="
+                                        priority-badge
+                                        priority-${priorityClass}
+                                    "
+                                >
+
+                                    ${escapeHTML(
+                                        priority
+                                    )}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- STATUS -->
+
+                            <td>
+
+                                <span
+                                    class="
+                                        status-badge
+                                        status-${statusClass}
+                                    "
+                                >
+
+                                    ${escapeHTML(
+                                        status
+                                    )}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- TECHNICIAN UPDATE -->
+
+                            <td>
+
+                                ${updateHTML}
+
+                            </td>
+
+
+                            <!-- DATE -->
+
+                            <td>
+
+                                ${formattedDate}
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                }).join('');
+
+        } catch (error) {
+
+            console.error(
+                'Error loading tickets:',
+                error
+            );
+
+
+            document
+                .getElementById(
+                    'tickets-list'
+                )
+                .innerHTML = `
+
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            style="
+                                text-align:center;
+                                color:#ef4444;
+                                padding:20px;
+                            "
+                        >
+
+                            <i
+                                class="fa-solid fa-triangle-exclamation"
+                            ></i>
+
+                            Error loading tickets.
+                            Please check the server connection.
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+        }
+
+    }
+
+
+    // ==========================================
+    // SUBMIT MAINTENANCE REQUEST
+    // ==========================================
+
+    document
+        .getElementById('ticket-form')
+        .addEventListener(
+            'submit',
+            async function(event) {
+
+                event.preventDefault();
+
+
+                const roomNo =
+                    document
+                        .getElementById(
+                            'roomNo'
+                        )
+                        .value
+                        .trim();
+
+
+                const title =
+                    document
+                        .getElementById(
+                            'title'
+                        )
+                        .value
+                        .trim();
+
+
+                const category =
+                    document
+                        .getElementById(
+                            'category'
+                        )
+                        .value;
+
+
+                const priority =
+                    document
+                        .getElementById(
+                            'priority'
+                        )
+                        .value;
+
+
+                const description =
+                    document
+                        .getElementById(
+                            'description'
+                        )
+                        .value
+                        .trim();
+
+
+                const activeUserId =
+                    user._id ||
+                    user.id;
+
+
+                if (!roomNo) {
+
+                    alert(
+                        'Please enter your Room No.'
+                    );
+
+                    return;
+
+                }
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            '/api/tickets',
+                            {
+                                method:
+                                    'POST',
+
+                                headers: {
+                                    'Content-Type':
+                                        'application/json'
+                                },
+
+                                body:
+                                    JSON.stringify({
+
+                                        userId:
+                                            activeUserId,
+
+                                        roomNo:
+                                            roomNo,
+
+                                        title:
+                                            title,
+
+                                        category:
+                                            category,
+
+                                        priority:
+                                            priority,
+
+                                        description:
+                                            description,
+
+                                        tenantId:
+                                            activeUserId,
+
+                                        tenantName:
+                                            user.name ||
+                                            user.email,
+
+                                        tenantEmail:
+                                            user.email,
+
+                                        createdBy:
+                                            user.email,
+
+                                        status:
+                                            'Pending'
+
+                                    })
+
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (
+                        response.ok
+                    ) {
+
+                        alert(
+                            'Maintenance request submitted successfully! ✅'
+                        );
+
+
+                        document
+                            .getElementById(
+                                'ticket-form'
+                            )
+                            .reset();
+
+
+                        await loadTickets();
+
+                    } else {
+
+                        alert(
+                            'Failed to submit ticket: ' +
+                            (
+                                data.message ||
+                                'Server error'
+                            )
+                        );
+
+                    }
+
+                } catch (error) {
+
+                    console.error(
+                        'Submit ticket error:',
+                        error
+                    );
+
+
+                    alert(
+                        'Error connecting to backend server.'
+                    );
+
+                }
+
+            }
+        );
+
+
+    // ==========================================
+    // INITIAL LOAD
+    // ==========================================
+
+    loadTickets();
+
+
+    // ==========================================
+    // AUTO REFRESH
+    // This allows the tenant to see a new
+    // technician update without refreshing.
+    // ==========================================
+
+    setInterval(
+        loadTickets,
+        10000
+    );
+
+</script>
+
+
+</body>
+
+</html>

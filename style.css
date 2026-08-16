@@ -63,12 +63,14 @@ section {
 
 
 /* ==========================================================================
-   2. HEADER & STYLED NAVBAR BUTTONS
+   2. HEADER, STYLED NAVBAR & CORNER TOGGLE
    ========================================================================== */
 header {
     text-align: center;
-    margin: 40px auto;
+    margin: 20px auto 40px auto;
     max-width: 800px;
+    position: relative; /* Relative anchor for top-right toggle positioning */
+    padding-top: 10px;
 }
 
 header h1 {
@@ -81,15 +83,12 @@ header h1 {
 header p.headline-text {
     font-size: 1.5rem;
     color: var(--text-muted);
-    font-weight: 700; /* Robust bold weight */
+    font-weight: 700;
     margin-top: 10px;
     display: inline-block;
-    
-    /* Executes a 0.5-second shake animation after a 0.8-second delay */
     animation: cleanShake 0.5s ease-in-out 0.8s 2 alternate;
 }
 
-/* Keyframes for the engineering shake movement */
 @keyframes cleanShake {
     0% { transform: translateX(0); }
     20% { transform: translateX(-4px) rotate(-0.5deg); }
@@ -97,6 +96,50 @@ header p.headline-text {
     60% { transform: translateX(-3px) rotate(-0.3deg); }
     80% { transform: translateX(3px) rotate(0.3deg); }
     100% { transform: translateX(0); }
+}
+
+/* Social media icon positioning in top bar */
+.top-social-icons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.top-social-icons a {
+    color: var(--text-heading);
+    font-size: 1.4rem;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.top-social-icons a:hover {
+    color: #3b82f6;
+    transform: translateY(-2px);
+}
+
+/* Dark Mode Toggle Button - Fixed Top Right Position */
+.theme-toggle-btn {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background: transparent;
+    border: 2px solid var(--text-heading);
+    color: var(--text-heading);
+    font-size: 1.1rem;
+    padding: 8px 14px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.theme-toggle-btn:hover {
+    background: var(--text-heading);
+    color: #ffffff;
+    transform: scale(1.05);
 }
 
 .navbar {
@@ -129,7 +172,7 @@ header p.headline-text {
 
 
 /* ==========================================================================
-   3. ABOUT ME & SPECIALIZATIONS (Profile Picture Added Here)
+   3. ABOUT ME & SPECIALIZATIONS
    ========================================================================== */
 .about {
     max-width: 800px;
@@ -142,20 +185,18 @@ header p.headline-text {
     margin-bottom: 20px;
 }
 
-/* Center container for your profile photo */
 .profile-pic-container {
     text-align: center;
     margin-bottom: 25px;
 }
 
-/* Clean circular design for stoes.jpg */
 .profile-img {
     width: 180px;
     height: 180px;
-    border-radius: 50%;          /* Makes the image a perfect circle */
-    object-fit: cover;            /* Prevents stretching or distortion */
-    border: 4px solid var(--text-heading); /* Matching blue border */
-    box-shadow: 0 4px 12px var(--box-shadow); /* Modern elegant shadow */
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--text-heading);
+    box-shadow: 0 4px 12px var(--box-shadow);
 }
 
 .about p {

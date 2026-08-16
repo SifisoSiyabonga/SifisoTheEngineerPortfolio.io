@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Form Using Mongoose</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f4f4f9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    .container { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 320px; }
+    h2, h3 { text-align: center; color: #333; margin-top: 0; }
+    p { font-size: 0.9em; color: #666; text-align: center; }
+    form { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+    input { padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+    button { padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background-color: #0056b3; }
+    .message { margin-top: 10px; text-align: center; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Login Form Using Mongoose</h2>
+    
+    <!-- REGISTER FORM -->
+    <h3>Register</h3>
+    <form id="registerForm">
+      <input type="email" id="regEmail" placeholder="Email" required />
+      <input type="password" id="regPassword" placeholder="Password" required />
+      <button type="submit">Register</button>
+    </form>
+    
+    <hr />
+
+    <!-- LOGIN FORM -->
+    <h3>Login</h3>
+    <form id="loginForm">
+      <input type="email" id="loginEmail" placeholder="Email" required />
+      <input type="password" id="loginPassword" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+
+    <div id="responseMessage" class="message"></div>
+  </div>
+
+  <script>
+    const msgDiv = document.getElementById("responseMessage");
+
+    // Register Handler
+    document.getElementById("registerForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("regEmail").value;
+      const password = document.getElementById("regPassword").value;
+
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await res.json();
+      msgDiv.textContent = data.message;
+      msgDiv.style.color = res.ok ? "green" : "red";
+    });
+
+    // Login Handler
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await res.json();
+      msgDiv.textContent = data.message;
+      msgDiv.style.color = res.ok ? "green" : "red";
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Sibanyoni Rentals</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+        body { background-color: #f4f6f9; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 100%; max-width: 420px; }
+        h2 { text-align: center; color: #333; margin-bottom: 0.5rem; }
+        p.subtitle { text-align: center; color: #666; font-size: 0.85rem; margin-bottom: 1.5rem; line-height: 1.4; }
+        .form-group { margin-bottom: 1rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: bold; font-size: 0.9rem; color: #444; }
+        input { width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px; font-size: 0.95rem; }
+        button { width: 100%; padding: 0.75rem; background-color: #0056b3; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 1rem; margin-top: 1rem; font-weight: bold; }
+        button:hover { background-color: #004085; }
+        .link { text-align: center; margin-top: 1rem; font-size: 0.9rem; }
+        .alert-message { padding: 0.75rem; border-radius: 4px; margin-bottom: 1rem; font-size: 0.85rem; display: none; text-align: center; }
+        .alert-error { color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; }
+        .alert-success { color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Sibanyoni Rentals</h2>
+        <p class="subtitle">Apartment Rental Management System 🏢 Browse, book, and manage apartments effortlessly.</p>
+        
+        <div id="status-alert" class="alert-message"></div>
+
+        <form id="login-form">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required>
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+        
+        <div class="link">
+            <a href="register.html">Don't have an account? Register here</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const alertDiv = document.getElementById('status-alert');
+            alertDiv.style.display = 'none';
+            alertDiv.className = 'alert-message';
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alertDiv.textContent = 'Login successful! Redirecting...';
+                    alertDiv.classList.add('alert-success');
+                    alertDiv.style.display = 'block';
+
+                    const user = data.user || {};
+
+                    localStorage.setItem('user', JSON.stringify(user));
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+
+                    const rawId = user._id || user.id || '';
+                    const rawName = user.name || user.username || user.fullName || email.split('@')[0];
+                    const rawRole = user.role || '';
+
+                    localStorage.setItem('userId', rawId);
+                    localStorage.setItem('userName', rawName);
+                    localStorage.setItem('userRole', rawRole);
+
+                    if (data.token) {
+                        localStorage.setItem('token', data.token);
+                    }
+
+                    const role = rawRole.toLowerCase();
+
+                    setTimeout(() => {
+                        if (role === 'admin') {
+                            window.location.replace('admin-dashboard.html');
+                        } else if (role === 'technician') {
+                            window.location.replace('technician-dashboard.html');
+                        } else {
+                            window.location.replace('tenant-dashboard.html');
+                        }
+                    }, 800);
+                } else {
+                    alertDiv.textContent = data.message || 'Login failed';
+                    alertDiv.classList.add('alert-error');
+                    alertDiv.style.display = 'block';
+                }
+            } catch (err) {
+                console.error(err);
+                alertDiv.textContent = 'Server connection failed.';
+                alertDiv.classList.add('alert-error');
+                alertDiv.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -74,6 +74,7 @@
             margin-top: 15px;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0, 120, 255, 0.3);
+            text-decoration: none;
         }
 
         .project-btn:hover {
@@ -184,7 +185,9 @@
             transition: transform 0.3s ease, border 0.3s ease;
             text-decoration: none;
             color: inherit;
-            display: block;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .modal-card:hover {
@@ -209,18 +212,21 @@
             font-size: 0.85rem;
             line-height: 1.5;
             color: #b3b3b3;
+            margin-bottom: 15px;
         }
 
         .btn-login {
-            display: inline-block;
-            margin-top: 12px;
-            padding: 6px 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
             background-color: #0078ff;
             color: #ffffff;
             font-size: 0.85rem;
             font-weight: 600;
             border-radius: 20px;
             transition: background-color 0.3s ease;
+            width: fit-content;
         }
 
         .modal-card:hover .btn-login {
@@ -244,6 +250,7 @@
         <nav class="navbar">
             <a href="#about">About</a>
             <a href="#experience">Experience</a>
+            <a href="#projects">Projects</a>
             <a href="#certificates">Certificates</a>
             <a href="#contact">Contacts</a>
             <!-- Dark Mode Toggle Button inside Navigation -->
@@ -378,6 +385,17 @@
                 </div>
             </div>
         </section>
+
+        <section id="projects" class="projects">
+            <h2>Projects</h2>
+            <div class="project-card">
+                <h3>My Portfolio & Web Applications</h3>
+                <p>A showcase of live web development projects, including interactive management tools, task applications, and weather tracking systems.</p>
+                <button id="open-vault-btn" class="project-btn">
+                    Launch Project Showcase <i class="fa-solid fa-rocket"></i>
+                </button>
+            </div>
+        </section>
         
         <section id="certificates" class="certificates">
             <h2>Certificates</h2>
@@ -391,17 +409,6 @@
                 <a href="Sifiso FNB Certificate.pdf" target="_blank" rel="noopener noreferrer" class="project-btn">
                     View Certificate <i class="fa-solid fa-file-pdf"></i>
                 </a>
-            </div>
-        </section>
-        
-        <section class="projects">
-            <h2>Projects</h2>
-            <div class="project-card">
-                <h3>My Portfolio Website</h3>
-                <p>Personal portfolio website developed using HTML, CSS, and JavaScript to showcase skills, projects, and professional information.</p>
-                <button id="open-vault-btn" class="project-btn">
-                    Launch Project Showcase <i class="fa-solid fa-rocket"></i>
-                </button>
             </div>
         </section>
         
@@ -440,25 +447,33 @@
             <div class="modal-project-grid">
                 <!-- Weather Application Card -->
                 <a href="https://SifisoSiyabonga.github.io/Weather-Application/" target="_blank" rel="noopener noreferrer" class="modal-card">
-                    <div class="modal-card-icon"><i class="fa-solid fa-cloud-sun"></i></div>
-                    <h3>Weather Application 🚀</h3>
-                    <p>Live weather tracking app featuring real-time kasi search, dynamic atmospheric themes, local time sync, and 5-day forecasts.</p>
+                    <div>
+                        <div class="modal-card-icon"><i class="fa-solid fa-cloud-sun"></i></div>
+                        <h3>Weather Application 🚀</h3>
+                        <p>Live weather tracking app featuring real-time kasi search, dynamic atmospheric themes, local time sync, and 5-day forecasts.</p>
+                    </div>
+                    <span class="btn-login">View Live App <i class="fa-solid fa-arrow-right"></i></span>
                 </a>
                 
                 <!-- To-Do Task Application Card -->
                 <a href="https://sifisosiyabonga.github.io/to-do-task-application/" target="_blank" rel="noopener noreferrer" class="modal-card">
-                    <div class="modal-card-icon"><i class="fa-solid fa-list-check"></i></div>
-                    <h3>To-Do Task Application 📝</h3>
-                    <p>Interactive task management system featuring task scheduling, dynamic completion tracking, and persistent local storage.</p>
+                    <div>
+                        <div class="modal-card-icon"><i class="fa-solid fa-list-check"></i></div>
+                        <h3>To-Do Task Application 📝</h3>
+                        <p>Interactive task management system featuring task scheduling, dynamic completion tracking, and persistent local storage.</p>
+                    </div>
+                    <span class="btn-login">View Live App <i class="fa-solid fa-arrow-right"></i></span>
                 </a>
 
                 <!-- Apartment Rental Management System Card -->
                 <a href="https://sibanyoni-property-management-systems.onrender.com" target="_blank" rel="noopener noreferrer" class="modal-card">
-                    <div class="modal-card-icon"><i class="fa-solid fa-building"></i></div>
-                    <h3>Sibanyoni Rentals 🏢</h3>
-                    <p>Apartment Rental Management System 🏢 Browse, book, and manage apartments effortlessly.</p>
+                    <div>
+                        <div class="modal-card-icon"><i class="fa-solid fa-building"></i></div>
+                        <h3>Sibanyoni Rentals 🏢</h3>
+                        <p>Apartment Rental Management System 🏢 Browse, book, and manage apartments effortlessly.</p>
+                    </div>
                     <div class="card-actions">
-                        <span class="btn-login">Login</span>
+                        <span class="btn-login">Login <i class="fa-solid fa-right-to-bracket"></i></span>
                     </div>
                 </a>
             </div>

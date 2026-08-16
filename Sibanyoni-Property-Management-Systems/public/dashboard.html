@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Sibanyoni Rentals</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+    .dashboard-card { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 500px; text-align: center; }
+    .dashboard-card h1 { font-size: 24px; color: #333; margin-bottom: 10px; }
+    .dashboard-card p { color: #555; margin-bottom: 20px; }
+    .btn-signout { background-color: #d9534f; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-bottom: 20px; }
+    .btn-signout:hover { background-color: #c9302c; }
+    .section-box { border-top: 1px solid #eee; padding-top: 20px; margin-top: 20px; text-align: left; }
+    .form-group { margin-bottom: 12px; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-family: inherit; }
+    .btn-submit { background-color: #28a745; color: white; border: none; padding: 10px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; }
+    .btn-submit:hover { background-color: #218838; }
+    .ticket-card { border: 1px solid #e0e0e0; background: #fafafa; padding: 12px; border-radius: 6px; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+
+  <div class="dashboard-card">
+    <h1>Dashboard</h1>
+    <p>Welcome <strong id="user-display-name">Tenant</strong>, I hope you are doing well today.</p>
+    <button class="btn-signout" onclick="signOut()">Sign Out</button>
+
+    <div class="section-box">
+      <h3 style="margin-top: 0;">Submit Maintenance Request</h3>
+      <form id="maintenance-form" onsubmit="submitTicket(event)">
+        <div class="form-group">
+          <input type="text" id="m-title" placeholder="Issue Title (e.g. Leaking Tap)" required />
+        </div>
+        <div class="form-group">
+          <select id="m-category">
+            <option value="Plumbing">Plumbing</option>
+            <option value="Electrical">Electrical</option>
+            <option value="Appliance">Appliance</option>
+            <option value="Structural">Structural</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <select id="m-priority">
+            <option value="Low">Low Priority</option>
+            <option value="Medium" selected>Medium Priority</option>
+            <option value="High">High Priority</option>
+            <option value="Emergency">Emergency</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <textarea id="m-description" placeholder="Describe the issue..." rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Submit Request</button>
+      </form>
+    </div>
+
+    <div class="section-box">
+      <h3>My Maintenance Tickets</h3>
+      <div id="tickets-list">Loading tickets...</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
