@@ -8,6 +8,56 @@
     <link rel="stylesheet" href="style.css">
     
     <style>
+        /* Dark Mode Global Variables & Styles */
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1a1a1a;
+            --card-bg: #f8f9fa;
+            --border-color: #e4e4e7;
+            --header-bg: #ffffff;
+        }
+
+        body.dark-mode {
+            --bg-color: #121214;
+            --text-color: #f1f5f9;
+            --card-bg: #1e1e24;
+            --border-color: #2d2d35;
+            --header-bg: #18181c;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            transition: background-color 0.3s ease;
+        }
+
+        /* Dark Mode Toggle Button */
+        .theme-toggle-btn {
+            background: transparent;
+            border: 2px solid #00c6ff;
+            color: #00c6ff;
+            font-size: 1.2rem;
+            padding: 8px 14px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+        }
+
+        .theme-toggle-btn:hover {
+            background: #00c6ff;
+            color: #ffffff;
+            transform: scale(1.05);
+        }
+
         /* Interactive Showcase Button Styles */
         .project-btn {
             background: linear-gradient(135deg, #0078ff, #00c6ff);
@@ -196,6 +246,10 @@
             <a href="#experience">Experience</a>
             <a href="#certificates">Certificates</a>
             <a href="#contact">Contacts</a>
+            <!-- Dark Mode Toggle Button inside Navigation -->
+            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Dark Mode">
+                <i id="theme-icon" class="fa-solid fa-moon"></i>
+            </button>
         </nav>
     </header>
     <main>
@@ -381,8 +435,7 @@
         <div class="modal-content">
             <span class="close-btn">&times;</span>
             <h2><i class="fa-solid fa-folder-open"></i> Project Vault</h2>
-            <p class="modal-subtitle">**Explore my collection of web development projects. 💻 Click on any project to view the details and explore what I’ve built.**
-</p>
+            <p class="modal-subtitle">Explore my collection of web development projects. 💻 Click on any project to view the details and explore what I’ve built.</p>
             <hr>
             <div class="modal-project-grid">
                 <!-- Weather Application Card -->
@@ -405,7 +458,7 @@
                     <h3>Sibanyoni Rentals 🏢</h3>
                     <p>Apartment Rental Management System 🏢 Browse, book, and manage apartments effortlessly.</p>
                     <div class="card-actions">
-                        
+                        <span class="btn-login">Login</span>
                     </div>
                 </a>
             </div>
@@ -432,7 +485,7 @@
             startDelay: 500,     
             showCursor: true,    
             cursorChar: '|',
-            loop: true           
+            loop: true          
         });
 
         // Interactive Modal Script (Open/Close functionality)
@@ -459,6 +512,34 @@
                 document.body.style.overflow = "auto";
             }
         }
+
+        // Dark Mode Toggle Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+
+        // Check persistent theme preference on page load
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+
+        // Toggle handler
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            
+            if (isDark) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
     </script>
 </body>
 </html>
